@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'RockwellStdBold';
+    src: url('rockwellstd-bold.eot');
+    src: url('rockwellstd-bold.eot') format('embedded-opentype'),
+         url('rockwellstd-bold.woff') format('woff'),
+         url('rockwellstd-bold.ttf') format('truetype'),
+         url('rockwellstd-bold.svg#RockwellStdBold') format('svg');
+}

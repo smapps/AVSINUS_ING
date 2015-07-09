@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ING</title>
+        <link rel="stylesheet" href="assets/css/styles.css" />
+		
+        <script type="text/javascript" src="cordova.js"></script>
+    	<script type="text/javascript" src="childbrowser.js"></script>
+		<script type="text/javascript" src="./assets/js/jquery-1.10.2.js"></script>
+        
+        <script>
+		var currentPos = 0;
+		var medewerkerCode = '';
+		$(document).ready(function () 
+		{
+			var s_saver;
+			$('body').on("touchstart", function() {
+				clearTimeout(s_saver);
+			
+				s_saver = setTimeout(function(){
+					$('.screensaver').fadeIn(900);
+				}, 60000);
+			
+				$('.screensaver').fadeOut(100);
+			});
+			
+		
+			$("#medewerkerCode .button").on('touchstart', function()
+			{
+				var number = $(this).attr('id').replace("m","");
+				$(this).addClass('hoverPincode');
+				if(number == 'cc')
+				{
+					medewerkerCode = '';
+					$("#mCode").html("");
+				}
+				else
+				{
+					var newValue = $("#mCode").html() + "*";
+					$("#mCode").html(newValue);
+					medewerkerCode += number;
+				}
+				checkMedewerkerCode();
+				
+			});
+			
+			$("#insertCode .button").on('touchstart', function()
+			{
+				var number = $(this).attr('id');
+				$(this).addClass('hoverPincode');
+				if(number == 'bs')
+				{
+					var field = '#v' + currentPos;
+					$(field).html('_');
+					currentPos -= 1;
+					if(currentPos < 0)
+					{
+						currentPos = 0;	
+					}
+				}
+				else if(number == 'cc')
+				{
+					$(".number").each(function()
+					{
+						$(this).html('_');
+					});
+					currentPos = 0;
+				}
+				else
+				{
+					currentPos += 1;
+					var field = '#v' + currentPos;
+					$(field).html(number);
+					checkPos(currentPos);
+				}
+				
+			});
+			$(".button").on("touchend",function()
+			{
+				$(this).removeClass('hoverPincode');	
+			});
+			$(".hiddenKey").on("touchstart", function()
+			{
+				$("#medewerkerCode").show();
+			});
+		});
+		
+		function checkPos(currentPos)
+		{
+			if (currentPos == 6)
+			{
+				$(".kop").fadeOut(50);
+				$(".voucher").animate({
+					left: "223px",
+					top: "230px"
+				}, 500, function(){
+					
+				});
+				$("#insertCode").fadeOut(500, function()
+				{
+					
+					$(".waiting").show(0, function()
+					{
+						var insertCode = '';
+						$(".number").each(function()
+						{
+							insertCode = insertCode + $(this).html();
+						});
+						
+						
+						$.get("http://192.168.41.2/api/checkCode.php?f=insertCode&code=" + insertCode)
+						.success(function(data)
+						{
+							
+							setTimeout(function(){ 
+								$(".voucher").fadeOut(500, function()
+								{
+									$(".waiting").hide();
+									if(data == "error")
+									{
+										$(".output").html('<h1 class="toph1">Helaas,</h1><h1>Je hebt niets gewonnen</h1><h2>Heb je nog een voucher?<br/>Probeer het dan nog eens</h2>');
+										$(".output").show();
+										setTimeout(function(){ 
+											
+											clearAll();
+											
+										}, 5000);
+										
+									}
+									else
+									{
+										$(".output").html('<h1 class="toph1">Gefeliciteerd,</h1><h1>Je hebt een prijs gewonnen:</h1><h2><span style="color: #000000;">' + data + '</span></h2><h2>Een van onze medewerkers<br/>helpt je graag verder</h2>');
+										$(".output").show();
+										$(".hiddenKey").show();
+										
+										
+										/*setTimeout(function(){ 
+											
+											clearAll();
+											
+										}, 5000);*/
+									}
+								});
+
+								
+																
+							}, 2000);
+							
+							
+							
+						})
+						.error(function(){
+							$(".voucher").fadeOut(500, function()
+							{
+								$(".waiting").hide();
+								$(".output").html('<h1 class="toph1">Helaas,</h1><h1>Je hebt niets gewonnen</h1><h2>Heb je nog een voucher?<br/>Probeer het dan nog eens</h2>');
+								$(".output").show();
+								$.get("http://192.168.41.2/api/checkCode.php?f=reset")
+								setTimeout(function(){ 
+									
+									clearAll();
+									
+								}, 5000);
+							});
+						});
+					});
+				});
+			}
+		};
+		function checkMedewerkerCode()
+		{
+			if(medewerkerCode == '0000')
+			{
+				clearAll();	
+			}
+			else if(medewerkerCode == '1590')
+			{
+				var insertCode = '';
+				$(".number").each(function()
+				{
+					insertCode = insertCode + $(this).html();
+				});
+				$.get("http://192.168.41.2/api/checkCode.php?f=removeCode&code=" + insertCode, function(data)
+				{
+					clearAll();	
+				});
+			}
+		}
+		function clearAll()
+		{
+			$(".voucher").hide();
+			$("#medewerkerCode").hide();
+			$("#mCode").html("");
+			$(".hiddenKey").hide();
+			medewerkerCode = '';
+			$(".number").each(function()
+			{
+				$(this).html('_');
+				$(".output").html("");
+				$(".output").hide();
+			});
+			currentPos = 0;
+			
+			$(".voucher").show();
+			$(".voucher").animate({
+				left: "400px",
+				top: "100px"
+			}, 500, function(){
+				$(".kop").fadeIn(500);
+			});
+			
+			$("#insertCode").fadeIn(500);
+		};	
+		
+		
+		</script>
+	</head>
+	<body>
+    	<div class="screensaver"></div>
+    	<div class="top">
+        	
+        </div>
+        <div class="content">
+        <div class="kop">
+		<h1>Vul je<br />
+        Vouchercode in</h1>
+        </div>
+        <div class="voucher">
+        	<div class="number" id="v1">_</div>
+            <div class="number" id="v2">_</div>
+            <div class="number" id="v3">_</div>
+            <div class="number" id="v4">_</div>
+            <div class="number" id="v5">_</div>
+            <div class="number" id="v6">_</div>
+        </div>
+        
+        <div id="insertCode">
+					<div>
+						<a id="1" class="button">
+							1
+						</a>
+					</div>
+					<div>
+						<a class="button" id="2">
+							2
+						</a>
+					</div>
+					<div>
+						<a class="button" id="3">
+							3
+						</a>
+					</div>
+					<div>
+						<a class="button" id="4">
+							4
+						</a>
+					</div>
+					<div>
+						<a class="button" id="5">
+							5
+						</a>
+					</div>
+					<div>
+						<a class="button" id="6">
+							6
+						</a>
+					</div>
+					<div>
+						<a class="button" id="7">
+							7
+						</a>
+					</div>
+					<div>
+						<a class="button" id="8">
+							8
+						</a>
+					</div>
+					<div>
+						<a class="button" id="9">
+							9
+						</a>
+					</div>
+					<div>
+						<a class="button" id="bs">
+							&lt;
+						</a>
+					</div>
+					<div>
+						<a class="button" id="0">
+							0
+						</a>
+					</div>
+					<div>
+						<a class="button" id="cc">
+							&laquo;
+						</a>
+					</div>
+        </div>
+        
+        <div id="medewerkerCode">
+        	<div style="position: relative; width: 100%; clear: both; padding-top: 3px; height: 17px; text-align:center;" id="mCode"></div>
+					<div>
+						<a id="m1" class="button">
+							1
+						</a>
+					</div>
+					<div>
+						<a class="button" id="m2">
+							2
+						</a>
+					</div>
+					<div>
+						<a class="button" id="m3">
+							3
+						</a>
+					</div>
+					<div>
+						<a class="button" id="m4">
+							4
+						</a>
+					</div>
+					<div>
+						<a class="button" id="m5">
+							5
+						</a>
+					</div>
+					<div>
+						<a class="button" id="m6">
+							6
+						</a>
+					</div>
+					<div>
+						<a class="button" id="m7">
+							7
+						</a>
+					</div>
+					<div>
+						<a class="button" id="m8">
+							8
+						</a>
+					</div>
+					
+					<div>
+						<a class="button" id="m9">
+							9
+						</a>
+					</div>
+                    <div>
+						<a class="button" id="mcc">
+							&laquo;
+						</a>
+					</div>
+					<div>
+						<a class="button" id="m0">
+							0
+						</a>
+					</div>
+	
+        </div>
+        <div class="waiting"><img src="./assets/images/loading.gif"></div>
+        <div class="output"></div>
+        <div class="hiddenKey"></div>
+        </div>
+	</body>
+</html>

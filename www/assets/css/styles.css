@@ -1,0 +1,282 @@
+* {
+	-webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+	-webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+	-webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+	-webkit-user-select: none;                 /* prevent copy paste, to allow, change 'none' to 'text' */
+}
+@font-face {
+    font-family: 'RockwellStdBold';
+    src: url('../fonts/rockwellstd-bold.eot');
+    src: url('../fonts/rockwellstd-bold.eot') format('embedded-opentype'),
+         url('../fonts/rockwellstd-bold.woff') format('woff'),
+         url('../fonts/rockwellstd-bold.ttf') format('truetype'),
+         url('../fonts/rockwellstd-bold.svg#RockwellStdBold') format('svg');
+}
+@font-face {
+    font-family: 'RockwellStd';
+    src: url('../fonts/rockwellstd.eot');
+    src: url('../fonts/rockwellstd.eot') format('embedded-opentype'),
+         url('../fonts/rockwellstd.woff') format('woff'),
+         url('../fonts/rockwellstd.ttf') format('truetype'),
+         url('../fonts/rockwellstd.svg#RockwellStdBold') format('svg');
+}
+h1
+{
+	font-family: "RockwellStdBold", Arial;
+	color: #ff6600;	
+	font-size: 40px;
+}
+h2
+{
+	font-family: "RockwellStd", Arial;
+	color: #ff6600;	
+	font-size: 30px;
+}
+h2.prijs
+{
+	color: #003d7c;		
+}
+html, body
+{
+	margin: 0;
+	padding: 0;	
+	font-family: "RockwellStdBold", Arial;
+	font-weight:normal;
+	color: #003d7c;
+	overflow: hidden;
+}
+html
+{
+	background: url(../images/basic_bg.jpg) no-repeat bottom right;	
+	background-size: 1024px 768px;
+	height: 100%;
+	width: 100%;
+}
+.screensaver
+{
+	position: absolute;
+	display:none;
+	left: 0px;
+	top: 0px;
+	width: 1024px;
+	height: 768px;	
+	background: url(../images/screensaver.jpg) no-repeat top left;
+	background-size: 1024px 768px;
+	z-index: 5000;
+}
+.top
+{
+	position: relative;
+	width: 1024px;
+	height: 10px;
+	background: #ff6600;	
+}
+.logo
+{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 187px;
+	height: 54px;
+	background: url(../images/logo_ing.png) no-repeat top left;	
+}
+.kop
+{
+	position:absolute;
+	left: 20px;
+	top: 70px;
+	width: 550px;
+	
+}
+
+.voucher
+{
+	position:absolute;
+	left: 400px;
+	top: 100px;
+	width: 350px;
+
+	width: 578px;
+	border-radius: 20px;
+	height: 85px;	
+}
+.voucher .number
+{
+	position: relative;
+	font-family: "RockwellStdBold", Arial;
+	font-size: 60px;
+	text-align: center;
+	line-height: 1em;
+	margin: 0;
+	padding: 0;
+	padding-top: 22px;
+	color: #003d7c;
+	float: left;
+	width: 85px;
+	border-radius: 20px;
+	border: 1px solid #ff6600;
+	margin-right: 10px;
+}
+.voucher .number:nth-child(6)
+{
+	margin-right: 0px;	
+}
+
+.content
+{
+	padding: 20px;	
+}
+
+#medewerkerCode {
+	position:absolute;
+	left: 20px;
+	bottom: 20px;
+	width: 130px;
+	clear: both;
+	margin: 0 auto;
+	display: none;
+	background: #FF6600;
+	border-radius: 5px;
+	z-index:10;
+}
+
+#insertCode {
+	position:absolute;
+	left: 390px;
+	top: 300px;
+	width: 300px;
+	clear: both;
+	margin: 0 auto;
+}
+#insertCode div, #medewerkerCode div{
+	float:left;
+}
+#insertCode a{
+	font-family: "RockwellStdBold", Arial;
+	background-color:#FFF;
+	-webkit-border-radius:20px;
+	border-radius:20px;
+	
+	border: 1px solid #FF6600;
+	
+	display: inline-block;
+	color:#003d7c;
+	font-size:24px;
+	line-height: 1em;
+	padding: 24px 24px 12px 24px;
+	margin:10px;
+	
+	text-decoration:none;
+	text-align:center;
+	cursor: pointer;
+	
+	-webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+#medewerkerCode a{
+	font-family: "RockwellStdBold", Arial;
+	background-color:#FFF;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	
+	border: 1px solid #FF6600;
+	
+	display: inline-block;
+	color:#003d7c;
+	font-size:12px;
+	line-height: 1em;
+	padding: 12px 12px 6px 12px;
+	margin:5px;
+	
+	text-decoration:none;
+	text-align:center;
+	cursor: pointer;
+	
+	-webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.hoverPincode
+{
+	-webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+	filter: alpha(opacity: 40);
+	opacity: 1;
+	color:#FFFFFF !important;
+	border: 1px solid #FF6600;
+	background-color:#FF6600 !important;
+}
+.hoverAf
+{
+	-webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+	filter: alpha(opacity: 40);
+	opacity: 1;
+}
+.waiting
+{
+	display: none;	
+	position:absolute;
+	width:100px;
+	text-align:center;
+	left: 462px;
+	top: 350px;
+	clear: both;
+	margin: 0 auto;
+}
+.output
+{
+	/*display:none;
+	position:absolute;
+	left: 0px;
+	width:1024px;
+	top: 340px;
+	height: 400px;
+	clear: both;
+	margin: 0 auto;
+	text-align: center;
+	z-index:1;*/
+	display:none;
+	position:absolute;
+	left: 20px;
+	width:1004px;
+	top: 70px;
+	height: 628px;
+	clear: both;
+	z-index:1;
+}
+.output h1
+{
+	font-size: 50px;	
+	margin: 0;
+	padding: 0;
+}
+.output h1.toph1
+{
+	font-size: 100px;	
+	margin: 0;
+	padding: 0;
+}
+.output h2
+{
+	font-size: 50px;	
+	font-family: "RockwellStd", Arial;
+}
+
+.hiddenKey
+{
+	display:none;
+	position:absolute;
+	right: 30px;
+	width:300px;
+	bottom: 30px;
+	height: 100px;
+	z-index: 600;
+}
